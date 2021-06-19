@@ -6,6 +6,31 @@ int nFieldHeight = 18;
 unsigned char *pField = nullptr;
 wstring blocks[7];
 
+int Rotate(int px, int py, int r)
+{
+    int pi = 0;
+    switch (r % 4)
+    {
+        case 0: // 0 degrees
+            pi = py * 4 + px;
+            break;
+
+        case 1: // 90 degrees
+            pi = 12 + py - (px * 4);
+            break;
+
+        case 2: // 180 degrees
+            pi = 15 - (py * 4) - px;
+            break;
+
+        case 3: // 270 degrees
+            pi = 3 - py + (px * 4);
+            break;
+    }
+
+    return pi;
+}
+
 int main() {
 
     //tetris blocks
