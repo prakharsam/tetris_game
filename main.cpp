@@ -1,10 +1,15 @@
 #include <iostream>
+#include <stdlib.h>
+#include <ncurses.h>
+
 using namespace std;
 
 int nFieldWidth = 12;
 int nFieldHeight = 18;
 unsigned char *pField = nullptr;
 wstring blocks[7];
+int nScreenWidth = 80;			// Console Screen Size X (columns)
+int nScreenHeight = 30;			// Console Screen Size Y (rows)
 
 int Rotate(int px, int py, int r)
 {
@@ -33,6 +38,14 @@ int Rotate(int px, int py, int r)
 
 int main() {
 
+    // Initialize ncurses screen
+    initscr();
+    getmaxyx(stdscr, nScreenHeight, nScreenWidth);
+    noecho();
+    curs_set(0); // invisible cursor
+    timeout(0); // for non-blocking getch()
+    keypad(stdscr,TRUE); // to enable KEY_LEFT, KEY_RIGHT, etc
+
     //tetris blocks
     blocks[0].append(L"..X...X...X...X.");
     blocks[1].append(L"..X..XX...X.....");
@@ -46,6 +59,7 @@ int main() {
     for (int x = 0; x < nFieldWidth; x++) // Board Boundary
         for (int y = 0; y < nFieldHeight; y++)
             pField[y*nFieldWidth + x] = (x == 0 || x == nFieldWidth - 1 || y == nFieldHeight - 1) ? 9 : 0;
+
 
     return 0;
 }
