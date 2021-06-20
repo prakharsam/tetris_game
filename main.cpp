@@ -59,7 +59,21 @@ int main() {
     for (int x = 0; x < nFieldWidth; x++) // Board Boundary
         for (int y = 0; y < nFieldHeight; y++)
             pField[y*nFieldWidth + x] = (x == 0 || x == nFieldWidth - 1 || y == nFieldHeight - 1) ? 9 : 0;
+    //Game logic
+    bool isGameOver = false;
 
+    // Create Screen Buffer
+    auto *screen = new wchar_t[nScreenWidth * nScreenHeight];
+    for (int i = 0; i < nScreenWidth * nScreenHeight; i++) screen[i] = L' ';
+
+    while(!isGameOver){
+        //Draw field
+        for (int x = 0; x < nFieldWidth; x++){
+            for (int y = 0; y < nFieldHeight; y++){
+                screen[(y + 2)*nScreenWidth + (x + 2)] = L" ABCDEFG=#"[pField[y*nFieldWidth + x]];
+            }
+        }
+    }
 
     return 0;
 }
